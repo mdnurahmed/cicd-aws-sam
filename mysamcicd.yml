@@ -6,7 +6,7 @@ Parameters:
 
   RepositoryName:
     Type: String
-    Description: The name of the GitHub repository.
+    Description: The name of the repository.
   RepositoryBranch:
     Type: String
     Description: The name of the branch.
@@ -20,12 +20,12 @@ Resources:
       Subscription: 
         - Endpoint: nurahmedsabbir@gmail.com
           Protocol: email
-      TopicName: 'fuckmylife'
+      TopicName: 'mytopic'
 
   MyCodeCommit:
     Type: AWS::CodeCommit::Repository
     Properties: 
-      RepositoryDescription: 'My stupid golang app'
+      RepositoryDescription: 'My app'
       RepositoryName: !Ref RepositoryName
       Triggers: 
         - DestinationArn : !Ref MySNSTopic
@@ -81,9 +81,6 @@ Resources:
                 ActionMode: CHANGE_SET_REPLACE
                 Capabilities: CAPABILITY_IAM
                 TemplatePath: BuildOutput::sam-template-output.yaml
-                #TemplateConfiguration: BuildOutput::config-dev.json
-                # ParameterOverrides:
-                #   Fn::Sub: '{ "StageName": "dev", "S3BucketName": "${ArtifactsBucket}" }'
                 ChangeSetName:
                   Fn::Sub: ${RepositoryName}-changeset
                 StackName:
